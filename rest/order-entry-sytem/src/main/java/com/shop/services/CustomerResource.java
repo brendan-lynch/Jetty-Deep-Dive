@@ -1,28 +1,31 @@
 package com.shop.services;
 
-import com.shop.domain.Customer;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
+import java.io.InputStream;
 
 /**
  * Created by brendan on 7/9/15.
  */
 
 @Path("/customers")
-public class CustomerResource {
-    //stateful object, without a database this object will hold customers in memory.
+public interface CustomerResource {
 
     @GET
-    public String getCustomer(){
-        return "Hello World";
-    }
-    private Map<Integer, Customer> customerDB = new ConcurrentHashMap<>();
-    private AtomicInteger idGenerator = new AtomicInteger();
+    @Path("{id}")
+    @Produces("application/xml")
+    StreamingOutput getCustomer(@PathParam("id") int id);
+
+
+
+    @POST
+    @Consumes("application/xml")
+    Response createCustomer(InputStream is);
+
+    @PUT
+    @Path("{id}")
+    @Consumes("application/xml")
+    void updateCustomer(@PathParam("id") int id, InputStream input);
 
 }

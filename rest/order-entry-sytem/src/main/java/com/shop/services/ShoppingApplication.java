@@ -13,7 +13,7 @@ public class ShoppingApplication extends Application {
     private Set<Object> singletons = new HashSet<>();
 
     public ShoppingApplication(){
-        singletons.add(new CustomerResource());
+        singletons.add(new CustomerResourceService());
     }
 
     @Override
